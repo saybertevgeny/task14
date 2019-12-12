@@ -1,0 +1,27 @@
+<section class="jumbotron text-center">
+  <div class="container">
+    <h1 class="jumbotron-heading">Album example</h1>
+    <p class="lead text-muted">Something short and leading about the collection below—its contents, the creator, etc.
+      Make it short and sweet, but not too short so folks don’t simply skip over it entirely.</p>
+  </div>
+</section>
+
+<div class="album py-5 bg-light">
+  <div class="container">
+    <div class="row" *ngIf="!loading; else loadingBlock" >
+      <div class="col-md-4" *ngFor="let todo of todos">
+        <div class="card mb-4 shadow-sm overflow-auto">
+          <div class="card-body">
+            <h5 class="card-title">{{todo.theme}}</h5>
+            <p class="card-text">{{todo.text}}</p>
+            <p>Приоритет: <strong>{{todo.priority}}</strong></p>
+            <p>Дедлайн: <strong>{{todo.deadline}}</strong></p>
+            <a [routerLink]="['/todo.ts',todo.id]" class="btn btn-primary stretched-link">Go to detail({{todo.id}}
+              )</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <ng-template #loadingBlock>Загрузка</ng-template>
+  </div>
+</div>
