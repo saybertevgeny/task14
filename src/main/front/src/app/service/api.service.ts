@@ -3,6 +3,7 @@ import {HttpClient, HttpEventType} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {tap} from "rxjs/operators";
 import {environment} from "../../environments/environment";
+import {Todo} from "../dto/todo";
 
 @Injectable({providedIn: 'root'})
 export class ApiService {
@@ -18,19 +19,8 @@ export class ApiService {
     return this.httpClient.get(this.getApiPrefix() + `/api/detail/${id}`)
   }
 
-  public delete(): Observable<any> {
-    return this.httpClient.delete(this.getApiPrefix() + 'api/delete', {
-      observe: 'events'
-    }).pipe(
-      tap(event => {
-        if (event.type == HttpEventType.Sent) {
-          console.log('Sent', event)
-        }
-        if (event.type == HttpEventType.Response) {
-          console.log('Response', event);
-        }
-      })
-    );
+  public addTodo(todo:Todo): Observable<any>{
+    return this.httpClient.post(this.getApiPrefix() + 'api/save',todo)
   }
 
   private getApiPrefix(): string {

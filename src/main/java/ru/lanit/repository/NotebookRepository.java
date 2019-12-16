@@ -16,7 +16,13 @@ public class NotebookRepository {
     private EntityManager entityManager;
 
     @Transactional
-    public void save(Notebook notebook) {
+    public void update(Notebook notebook) {
+        entityManager.merge(notebook);
+        entityManager.flush();
+    }
+
+    @Transactional
+    public void add(Notebook notebook) {
         entityManager.persist(notebook);
         entityManager.flush();
     }

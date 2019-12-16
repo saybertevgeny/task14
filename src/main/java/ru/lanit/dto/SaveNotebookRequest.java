@@ -9,6 +9,8 @@ import java.time.LocalDate;
 
 public class SaveNotebookRequest {
 
+    private int id;
+
     @NotBlank(message = "Тема обязательна")
     private String theme;
 
@@ -21,6 +23,15 @@ public class SaveNotebookRequest {
     @NotNull(message = "Дата дедлайна должны быть заполнена")
     @Future(message = "Дата дедлайна должна быть в будущем")
     private LocalDate deadline;
+
+    public int getId() {
+        return id;
+    }
+
+    public SaveNotebookRequest setId(int id) {
+        this.id = id;
+        return this;
+    }
 
     public String getTheme() {
         return theme;

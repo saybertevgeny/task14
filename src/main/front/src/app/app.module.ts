@@ -7,6 +7,7 @@ import {HttpClientModule} from "@angular/common/http";
 import { ListComponent } from './components/list/list.component';
 import { DetailComponent } from './components/detail/detail.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {DatePipe} from "@angular/common";
 
 @NgModule({
   declarations: [
@@ -21,7 +22,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

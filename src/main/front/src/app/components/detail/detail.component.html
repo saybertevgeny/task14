@@ -1,10 +1,10 @@
 <div class="album py-5 bg-light">
   <div class="container" >
     <form [formGroup]="form" (ngSubmit)="submit()" *ngIf="!loading; else loadingBlock">
-      <input type="hidden" formControlName="id">
+      <input type="hidden" formControlName="id" value="{{todo.id}}">
       <div class="form-group">
         <label>Тема</label>
-        <input type="text" class="form-control" placeholder="Введите тему" formControlName="theme">
+        <input type="text" class="form-control" placeholder="Введите тему" formControlName="theme" >
         <div *ngIf="form.get('theme').invalid && form.get('theme').touched" class="validation">
           <small *ngIf="form.get('theme').errors.required">Поле тема не может быть пустым</small>
         </div>
@@ -18,9 +18,10 @@
       </div>
       <div class="form-group">
         <label>Дедлайн</label>
-        <input type="date" class="form-control" placeholder="Enter theme" formControlName="deadline">
+        <input type="date" class="form-control" placeholder="Enter theme" formControlName="deadline" >
         <div *ngIf="form.get('deadline').invalid && form.get('deadline').touched" class="validation">
           <small *ngIf="form.get('deadline').errors.required">Поле дедлайн не может быть пустым</small>
+          <small *ngIf="form.get('deadline').errors.dataInFuture">Дата не должна быть в прошлом</small>
         </div>
       </div>
       <div class="form-group">
@@ -35,7 +36,7 @@
         </div>
       </div>
       <div class="form-group">
-        <button class="btn btn-primary mb-2" type="submit">Отправить</button>
+        <button class="btn btn-primary mb-2" type="submit" [disabled]="!form.valid">Отправить</button>
       </div>
     </form>
     <ng-template #loadingBlock>

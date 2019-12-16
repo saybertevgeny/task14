@@ -5,7 +5,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.lanit.dto.SaveNotebookRequest;
+import ru.lanit.exception.NoEntityException;
 import ru.lanit.service.NotebookService;
+
 import javax.validation.Valid;
 
 @RestController
@@ -15,9 +17,13 @@ public class NotebookController {
     private NotebookService notebookService;
 
     @RequestMapping(value = "/save", consumes = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
-    public ResponseEntity save(@RequestBody @Valid SaveNotebookRequest request) {
-        notebookService.save(request);
-        return ResponseEntity.ok().build();
+    public ResponseEntity save(@RequestBody @Valid SaveNotebookRequest request) throws NoEntityException {
+        try {
+            notebookService.save(request);
+            return ResponseEntity.ok().build();
+        } catch (NoEntityException e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @RequestMapping("/list")
