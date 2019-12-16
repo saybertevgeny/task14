@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {ApiService} from "../service/api.service";
-import {Todo} from '../dto/todo';
+import {ApiService} from "../../service/api.service";
+import {Todo} from '../../dto/todo';
 
 @Component({
   selector: 'app-list',
