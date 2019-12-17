@@ -16,8 +16,5 @@ export class AppComponent implements OnInit {
 
 
   delete() {
-    this.apiService.delete().subscribe(response=>{
-      console.log(response);
-    })
   }
 }

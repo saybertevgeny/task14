@@ -35,7 +35,7 @@ public class NotebookService {
         }
         entity.setTheme(request.getTheme())
                 .setText(request.getText())
-                .setDeadline(LocalDate.now())
+                .setDeadline(request.getDeadline())
                 .setPriority(PriorityEnum.LOW);
         if(update)
             this.repository.update(entity);
@@ -58,8 +58,11 @@ public class NotebookService {
         return result;
     }
 
-    public NotebookResponse getById(int id){
+    public NotebookResponse getById(int id) throws NoEntityException{
         Notebook notebook = this.repository.findById(id);
+        if(notebook == null){
+            throw new NoEntityException();
+        }
         return new NotebookResponse(
                 notebook.getId(),
                 notebook.getTheme(),
@@ -67,5 +70,12 @@ public class NotebookService {
                 notebook.getDeadline().format(DateTimeFormatter.ofPattern("dd.MM.YYYY")),
                 notebook.getPriority().name()
         );
+    }
+
+    public void delete(int id) throws NoEntityException{
+        Notebook notebook = repository.findById(id);
+        if(notebook == null)
+            throw new NoEntityException();
+        this.repository.delete(notebook);
     }
 }

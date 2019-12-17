@@ -2,6 +2,8 @@ package ru.lanit.repository;
 
 import org.springframework.stereotype.Component;
 import ru.lanit.entity.Notebook;
+import ru.lanit.exception.NoEntityException;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaQuery;
@@ -36,5 +38,10 @@ public class NotebookRepository {
 
     public Notebook findById(int id){
         return this.entityManager.find(Notebook.class,id);
+    }
+
+    @Transactional
+    public void delete(Notebook notebook) throws NoEntityException{
+        entityManager.remove(entityManager.contains(notebook) ? notebook : entityManager.merge(notebook));
     }
 }

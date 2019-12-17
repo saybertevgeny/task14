@@ -18,12 +18,8 @@ public class NotebookController {
 
     @RequestMapping(value = "/save", consumes = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
     public ResponseEntity save(@RequestBody @Valid SaveNotebookRequest request) throws NoEntityException {
-        try {
-            notebookService.save(request);
-            return ResponseEntity.ok().build();
-        } catch (NoEntityException e) {
-            return ResponseEntity.badRequest().build();
-        }
+        notebookService.save(request);
+        return ResponseEntity.ok().build();
     }
 
     @RequestMapping("/list")
@@ -32,12 +28,14 @@ public class NotebookController {
     }
 
     @RequestMapping("/detail/{id}")
-    public ResponseEntity detail(@PathVariable(required = true) int id) {
+    public ResponseEntity detail(@PathVariable(required = true) int id) throws NoEntityException {
         return ResponseEntity.ok(notebookService.getById(id));
     }
 
-    @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
-    public ResponseEntity delete() {
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity delete(@PathVariable(required = true) int id) throws NoEntityException {
+        notebookService.delete(id);
         return ResponseEntity.ok().build();
     }
+
 }

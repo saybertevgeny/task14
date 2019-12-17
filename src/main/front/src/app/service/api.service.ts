@@ -1,7 +1,6 @@
 import {Injectable} from "@angular/core";
-import {HttpClient, HttpEventType} from "@angular/common/http";
+import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {tap} from "rxjs/operators";
 import {environment} from "../../environments/environment";
 import {Todo} from "../dto/todo";
 
@@ -12,15 +11,24 @@ export class ApiService {
   }
 
   public getList(): Observable<any> {
-    return this.httpClient.get(this.getApiPrefix() + 'api/list')
+    console.log(this.getApiPrefix() + 'api/list');
+    try {
+      return this.httpClient.get(this.getApiPrefix() + 'api/list')
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   public getDetail(id): Observable<any> {
-    return this.httpClient.get(this.getApiPrefix() + `/api/detail/${id}`)
+    return this.httpClient.get(this.getApiPrefix() + `api/detail/${id}`)
   }
 
-  public addTodo(todo:Todo): Observable<any>{
-    return this.httpClient.post(this.getApiPrefix() + 'api/save',todo)
+  public addTodo(todo: Todo): Observable<any> {
+    return this.httpClient.post(this.getApiPrefix() + 'api/save', todo)
+  }
+
+  public delete(id: number): Observable<any> {
+    return this.httpClient.delete(this.getApiPrefix() + `api/delete/${id}`);
   }
 
   private getApiPrefix(): string {

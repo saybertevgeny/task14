@@ -7,7 +7,8 @@ import {HttpClientModule} from "@angular/common/http";
 import { ListComponent } from './components/list/list.component';
 import { DetailComponent } from './components/detail/detail.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {DatePipe} from "@angular/common";
+import {APP_BASE_HREF, DatePipe} from "@angular/common";
+import {environment} from "../environments/environment";
 
 @NgModule({
   declarations: [

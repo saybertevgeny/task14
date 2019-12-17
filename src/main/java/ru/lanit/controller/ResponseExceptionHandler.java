@@ -6,9 +6,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import ru.lanit.dto.ApiError;
+import ru.lanit.exception.NoEntityException;
 
 @ControllerAdvice
 public class ResponseExceptionHandler extends ResponseEntityExceptionHandler {
@@ -28,5 +30,10 @@ public class ResponseExceptionHandler extends ResponseEntityExceptionHandler {
     @Override
     protected ResponseEntity<Object> handleHttpMessageNotReadable(final HttpMessageNotReadableException ex, final HttpHeaders headers, final HttpStatus status, final WebRequest request) {
         return handleExceptionInternal(ex, new ApiError("Ошибка валидации"), headers, HttpStatus.BAD_REQUEST, request);
+    }
+
+    @ExceptionHandler(NoEntityException.class)
+    protected ResponseEntity<Object> handleNoEntityException() {
+        return new ResponseEntity("", HttpStatus.NOT_FOUND);
     }
 }

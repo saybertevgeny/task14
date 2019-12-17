@@ -6,6 +6,7 @@ import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
 import {DateValidator} from "./validators/date.validator";
 import {DatePipe} from "@angular/common";
 import {DateHelper} from "../../service/date.helper";
+import {error} from "util";
 
 @Component({
   selector: 'app-detail',
@@ -23,7 +24,6 @@ export class DetailComponent implements OnInit {
     private apiService: ApiService,
     private route: ActivatedRoute,
     private router: Router,
-    private datePipe: DatePipe,
     private dataHelper: DateHelper
   ) {
   }
@@ -36,11 +36,14 @@ export class DetailComponent implements OnInit {
       } else {
         this.loading = true;
         this.apiService.getDetail(+params.id).subscribe(response => {
-          this.updating = true;
-          this.todo = response;
-          this.loading = false;
-          this.initForm();
-        })
+            this.updating = true;
+            this.todo = response;
+            this.loading = false;
+            this.initForm();
+          },
+          error => {
+            alert("Ошибка при загрузке");
+          })
       }
 
     });
@@ -55,10 +58,15 @@ export class DetailComponent implements OnInit {
         priority: this.form.get("priority").value,
         deadline: this.form.get("deadline").value
       };
-      this.apiService.addTodo(todo).subscribe(response => {
-        console.log(response);
-      })
-      this.form.reset();
+      this.apiService.addTodo(todo).subscribe(
+        response => {
+          if (!this.updating) {
+            this.form.reset();
+          }
+        },
+        error => {
+          alert("Ошибка при сохраненнии.")
+        });
     }
   }
 

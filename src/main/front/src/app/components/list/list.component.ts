@@ -22,8 +22,18 @@ export class ListComponent implements OnInit {
         this.loading = false
       },
       error => {
-        console.log(error);
+        alert("Ошибка загрузки")
       })
   }
 
+  remove(id:number) {
+    this.apiService.delete(id).subscribe(
+      response => {
+        this.todos.filter(todo => {return id != todo.id})
+      },
+      error => {
+        alert("Ошибка при удалении");
+      }
+    )
+  }
 }
