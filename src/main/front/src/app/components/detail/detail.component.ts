@@ -2,11 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {ApiService} from "../../service/api.service";
 import {ActivatedRoute, Params, Router} from "@angular/router";
 import {Todo} from '../../dto/todo';
-import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {DateValidator} from "./validators/date.validator";
-import {DatePipe} from "@angular/common";
 import {DateHelper} from "../../service/date.helper";
-import {error} from "util";
 
 @Component({
   selector: 'app-detail',

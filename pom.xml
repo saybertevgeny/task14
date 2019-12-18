@@ -6,7 +6,7 @@
     <groupId>ru.lanit</groupId>
     <artifactId>task14</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <packaging>war</packaging>
+    <packaging>${mvn.packaging}</packaging>
 
     <properties>
         <spring.version>5.2.0.RELEASE</spring.version>
@@ -18,6 +18,30 @@
         <servlet.version>4.0.1</servlet.version>
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
+
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <properties>
+                <loglevel>DEBUG</loglevel>
+                <app.spring.profile>development</app.spring.profile>
+                <mvn.packaging>war</mvn.packaging>
+                <front.build>build</front.build>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <profile>
+            <id>prod</id>
+            <properties>
+                <loglevel>INFO</loglevel>
+                <app.spring.profile>production</app.spring.profile>
+                <mvn.packaging>war</mvn.packaging>
+                <front.build>build</front.build>
+            </properties>
+        </profile>
+    </profiles>
 
     <dependencies>
         <!--Spring start-->
@@ -125,6 +149,21 @@
             <artifactId>h2</artifactId>
             <version>1.4.200</version>
         </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.2.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-to-slf4j</artifactId>
+            <version>2.11.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jul-to-slf4j</artifactId>
+            <version>1.7.28</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -164,7 +203,7 @@
                             <goal>npm</goal>
                         </goals>
                         <configuration>
-                            <arguments>run build</arguments>
+                            <arguments>run ${front.build}</arguments>
                         </configuration>
                     </execution>
                 </executions>
@@ -206,5 +245,11 @@
                 </configuration>
             </plugin>
         </plugins>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
     </build>
 </project>

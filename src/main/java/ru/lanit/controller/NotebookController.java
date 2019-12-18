@@ -1,5 +1,6 @@
 package ru.lanit.controller;
 
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -7,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 import ru.lanit.dto.SaveNotebookRequest;
 import ru.lanit.exception.NoEntityException;
 import ru.lanit.service.NotebookService;
-
 import javax.validation.Valid;
 
 @RestController
@@ -24,6 +24,10 @@ public class NotebookController {
 
     @RequestMapping("/list")
     public ResponseEntity list() {
+        LogFactory.getLog("").debug("!!test!!!");
+        LogFactory.getLog("").info("!!test!!!");
+        LogFactory.getLog("").warn("!!test!!!");
+        LogFactory.getLog("").error("!!test!!!");
         return ResponseEntity.ok(notebookService.getAll());
     }
 
