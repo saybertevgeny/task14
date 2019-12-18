@@ -36,7 +36,7 @@ public class NotebookService {
         entity.setTheme(request.getTheme())
                 .setText(request.getText())
                 .setDeadline(request.getDeadline())
-                .setPriority(PriorityEnum.LOW);
+                .setPriority(PriorityEnum.valueOf(request.getPriority()));
         if(update)
             this.repository.update(entity);
         else

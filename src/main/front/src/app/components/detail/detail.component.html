@@ -1,7 +1,7 @@
 <div class="album py-5 bg-light">
   <div class="container" >
     <form [formGroup]="form" (ngSubmit)="submit()" *ngIf="!loading; else loadingBlock">
-      <input type="hidden" formControlName="id" value="{{todo.id}}">
+      <input type="hidden" formControlName="id">
       <div class="form-group">
         <label>Тема</label>
         <input type="text" class="form-control" placeholder="Введите тему" formControlName="theme" >

@@ -25,7 +25,7 @@
             <properties>
                 <loglevel>DEBUG</loglevel>
                 <app.spring.profile>development</app.spring.profile>
-                <mvn.packaging>war</mvn.packaging>
+                <mvn.packaging>jar</mvn.packaging>
                 <front.build>build</front.build>
             </properties>
             <activation>
@@ -38,7 +38,7 @@
                 <loglevel>INFO</loglevel>
                 <app.spring.profile>production</app.spring.profile>
                 <mvn.packaging>war</mvn.packaging>
-                <front.build>build</front.build>
+                <front.build>buildProd</front.build>
             </properties>
         </profile>
     </profiles>

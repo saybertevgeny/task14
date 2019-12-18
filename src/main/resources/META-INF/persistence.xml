@@ -4,16 +4,10 @@
              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
     <persistence-unit name="db">
         <properties>
-            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect"/>
-            <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
-            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://192.168.0.121:3309/task14"/>
-            <property name="javax.persistence.jdbc.user" value="root"/>
-            <property name="javax.persistence.jdbc.password" value="toor"/>
-
-<!--            <property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/>-->
-<!--            <property name="javax.persistence.jdbc.url" value="jdbc:h2:mem:db;DB_CLOSE_DELAY=-1"/>-->
-<!--            <property name="javax.persistence.jdbc.user" value="sa"/>-->
-<!--            <property name="javax.persistence.jdbc.password" value="sa"/>-->
+            <property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:h2:mem:db;DB_CLOSE_DELAY=-1"/>
+            <property name="javax.persistence.jdbc.user" value="sa"/>
+            <property name="javax.persistence.jdbc.password" value="sa"/>
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.connection.CharSet" value="utf8"/>
             <property name="hibernate.connection.characterEncoding" value="utf8"/>

@@ -29,7 +29,7 @@ export class ListComponent implements OnInit {
   remove(id:number) {
     this.apiService.delete(id).subscribe(
       response => {
-        this.todos.filter(todo => {return id != todo.id})
+        this.todos = this.todos.filter(todo => {return id != todo.id})
       },
       error => {
         alert("Ошибка при удалении");
