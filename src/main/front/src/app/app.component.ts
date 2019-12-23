@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ApiService} from "./service/api.service";
+import {AuthManager} from "./service/auth.manager";
 
 @Component({
   selector: 'app-root',
@@ -8,7 +9,7 @@ import {ApiService} from "./service/api.service";
 })
 export class AppComponent implements OnInit {
 
-  constructor(private apiService: ApiService) {
+  constructor(private apiService: ApiService, private authManager: AuthManager) {
   }
 
   ngOnInit(): void {
@@ -16,5 +17,9 @@ export class AppComponent implements OnInit {
 
 
   delete() {
+  }
+
+  public isAuth():boolean{
+    return t
   }
 }

@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {environment} from "../../environments/environment";
 import {Todo} from "../dto/todo";
+import {LoginRequest} from "../dto/login.request";
 
 @Injectable({providedIn: 'root'})
 export class ApiService {
@@ -29,6 +30,10 @@ export class ApiService {
 
   public delete(id: number): Observable<any> {
     return this.httpClient.delete(this.getApiPrefix() + `api/delete/${id}`);
+  }
+
+  public auth(loginRequest: LoginRequest): Observable<any> {
+    return this.httpClient.post(this.getApiPrefix() + 'api/login', loginRequest);
   }
 
   private getApiPrefix(): string {
