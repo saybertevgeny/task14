@@ -21,7 +21,6 @@ public class SaveNotebookRequest {
     private String priority;
 
     @NotNull(message = "Дата дедлайна должны быть заполнена")
-    @Future(message = "Дата дедлайна должна быть в будущем")
     private LocalDate deadline;
 
     public int getId() {

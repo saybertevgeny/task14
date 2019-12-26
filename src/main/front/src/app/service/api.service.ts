@@ -12,12 +12,7 @@ export class ApiService {
   }
 
   public getList(): Observable<any> {
-    console.log(this.getApiPrefix() + 'api/list');
-    try {
       return this.httpClient.get(this.getApiPrefix() + 'api/list')
-    } catch (e) {
-      console.log(e);
-    }
   }
 
   public getDetail(id): Observable<any> {

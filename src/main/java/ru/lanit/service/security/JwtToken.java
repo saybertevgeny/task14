@@ -3,9 +3,11 @@ package ru.lanit.service.security;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.SignatureException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+import ru.lanit.exception.AuthException;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -20,8 +22,12 @@ public class JwtToken implements Serializable {
     @Value("${jwt.secret}")
     private String secret;
 
-    public String getUsernameFromToken(String token) {
-        return getClaimFromToken(token, Claims::getSubject);
+    public String getUsernameFromToken(String token) throws AuthException {
+        try {
+            return getClaimFromToken(token, Claims::getSubject);
+        } catch (SignatureException e) {
+            throw new AuthException();
+        }
     }
 
     public Date getExpirationDateFromToken(String token) {
@@ -55,8 +61,12 @@ public class JwtToken implements Serializable {
     }
 
     public Boolean validateToken(String token, UserDetails userDetails) {
-        final String username = getUsernameFromToken(token);
-        return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+        try {
+            final String username = getUsernameFromToken(token);
+            return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+        } catch (AuthException e) {
+            return false;
+        }
     }
 
 }

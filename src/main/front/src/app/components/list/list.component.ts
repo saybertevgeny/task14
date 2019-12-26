@@ -22,7 +22,7 @@ export class ListComponent implements OnInit {
         this.loading = false
       },
       error => {
-        alert("Ошибка загрузки")
+        alert(error)
       })
   }
 
@@ -32,7 +32,7 @@ export class ListComponent implements OnInit {
         this.todos = this.todos.filter(todo => {return id != todo.id})
       },
       error => {
-        alert("Ошибка при удалении");
+        alert(error);
       }
     )
   }

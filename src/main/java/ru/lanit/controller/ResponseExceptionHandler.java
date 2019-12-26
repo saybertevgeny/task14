@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import ru.lanit.dto.ApiError;
+import ru.lanit.exception.AuthException;
 import ru.lanit.exception.NoEntityException;
 
 @ControllerAdvice
@@ -35,5 +36,10 @@ public class ResponseExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(NoEntityException.class)
     protected ResponseEntity<Object> handleNoEntityException() {
         return new ResponseEntity("", HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(AuthException.class)
+    protected ResponseEntity<Object> handleAuthException() {
+        return new ResponseEntity("", HttpStatus.UNAUTHORIZED);
     }
 }

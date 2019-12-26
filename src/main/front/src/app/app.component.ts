@@ -9,7 +9,7 @@ import {AuthManager} from "./service/auth.manager";
 })
 export class AppComponent implements OnInit {
 
-  constructor(private apiService: ApiService, private authManager: AuthManager) {
+  constructor(private apiService: ApiService, public authManager: AuthManager) {
   }
 
   ngOnInit(): void {
@@ -19,7 +19,8 @@ export class AppComponent implements OnInit {
   delete() {
   }
 
-  public isAuth():boolean{
-    return t
+  logout() {
+    this.authManager.logout();
+    location.reload();
   }
 }

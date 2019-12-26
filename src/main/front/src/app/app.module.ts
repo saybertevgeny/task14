@@ -11,6 +11,8 @@ import {APP_BASE_HREF, DatePipe} from "@angular/common";
 import {environment} from "../environments/environment";
 import {AuthInterceptor} from "./auth.interceptor";
 import { AuthComponent } from './components/auth/auth.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {NgbDatepicker, NgbDatepickerModule, NgbModule} from "@ng-bootstrap/ng-bootstrap";
 
 const INTERCEPTOR_PROVIDER: Provider = {
   provide: HTTP_INTERCEPTORS,
@@ -30,7 +32,13 @@ const INTERCEPTOR_PROVIDER: Provider = {
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    NgbModule,
+    NgbDatepickerModule
+  ],
+  exports:[
+    NgbDatepicker
   ],
   providers: [INTERCEPTOR_PROVIDER],
   bootstrap: [AppComponent]

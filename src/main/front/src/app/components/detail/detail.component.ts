@@ -5,6 +5,7 @@ import {Todo} from '../../dto/todo';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {DateValidator} from "./validators/date.validator";
 import {DateHelper} from "../../service/date.helper";
+import {NgbDateStruct} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'app-detail',
@@ -17,6 +18,8 @@ export class DetailComponent implements OnInit {
   loading: boolean = false;
   todo: Todo;
   form: FormGroup;
+  date: any;
+  model: NgbDateStruct;
 
   constructor(
     private apiService: ApiService,
@@ -54,7 +57,7 @@ export class DetailComponent implements OnInit {
         theme: this.form.get("theme").value,
         text: this.form.get("text").value,
         priority: this.form.get("priority").value,
-        deadline: this.form.get("deadline").value
+        deadline: this.dataHelper.toDefaultFromDate(this.form.get("deadline").value)
       };
       this.apiService.addTodo(todo).subscribe(
         response => {
@@ -63,7 +66,7 @@ export class DetailComponent implements OnInit {
           }
         },
         error => {
-          alert("Ошибка при сохраненнии.")
+          alert(error)
         });
     }
   }
@@ -73,7 +76,7 @@ export class DetailComponent implements OnInit {
       theme: new FormControl(this.updating ? this.todo.theme : null,
         [Validators.required]),
       text: new FormControl(this.updating ? this.todo.text : null, [Validators.required]),
-      deadline: new FormControl(this.updating ? this.dataHelper.getDefaultFormatedDate(this.todo.deadline) : null, [Validators.required, DateValidator.inFuture]),
+      deadline: new FormControl(this.updating ? this.dataHelper.toDateFromDefault(this.todo.deadline): null, [Validators.required, DateValidator.validate]),
       priority: new FormControl(this.updating ? this.todo.priority : null, [Validators.required]),
       id: new FormControl(this.updating ? this.todo.id : null, [])
     });

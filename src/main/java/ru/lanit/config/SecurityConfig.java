@@ -2,6 +2,8 @@ package ru.lanit.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.core.env.Environment;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -11,7 +13,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import ru.lanit.service.JwtUserDetailsService;
+import ru.lanit.service.UserService;
 import ru.lanit.service.security.JwtAuthenticationEntryPoint;
 import ru.lanit.service.security.JwtRequestFilter;
 
@@ -22,14 +24,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
     @Autowired
-    private JwtUserDetailsService jwtUserDetailsService;
+    private UserService userService;
 
     @Autowired
     private JwtRequestFilter jwtRequestFilter;
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(jwtUserDetailsService).passwordEncoder(passwordEncoder());
+        auth.userDetailsService(userService).passwordEncoder(passwordEncoder());
     }
 
     @Bean
@@ -46,8 +48,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.csrf().disable()
-                .authorizeRequests().antMatchers("/api/login","/user").permitAll().
-                anyRequest().authenticated().and()
+                .authorizeRequests().antMatchers("/*").permitAll()
+                .antMatchers("/api").denyAll()
+                .antMatchers("/api/login").permitAll()
+                .antMatchers(HttpMethod.OPTIONS).permitAll()
+                .anyRequest().authenticated().and()
                 .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
@@ -57,6 +62,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
-
 }

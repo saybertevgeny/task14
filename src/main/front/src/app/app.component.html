@@ -5,12 +5,21 @@
   <li class="nav-item">
     <a class="nav-link" [routerLink]="['/add']">Add</a>
   </li>
+  <li class="nav-item" *ngIf="authManager.isAuth()">
+    <a class="nav-link" href="#" (click)="logout()">Logout</a>
+  </li>
 </ul>
 
-<ng-template *ngIf="authManager.isAuth();else notLogged">
-  <router-outlet></router-outlet>
-</ng-template>
+<!--This is where my before login router stays-->
+<div class="logedIn-route" *ngIf="authManager.isAuth();else notLogged">
+  <ng-container *ngTemplateOutlet="template"></ng-container>
+</div>
 <ng-template #notLogged>
-  <!--  TODO:Добавить нормальное описание-->
-  Необхиодмо авторизоваться
+  <app-auth></app-auth>
 </ng-template>
+
+<ng-template #template>
+  <router-outlet>
+  </router-outlet>
+</ng-template>
+
